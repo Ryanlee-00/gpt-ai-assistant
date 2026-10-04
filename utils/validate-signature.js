@@ -3,8 +3,6 @@ import {
   timingSafeEqual,
 } from 'crypto';
 
-const s2b = (str, encoding) => Buffer.from(str, encoding);
-
 const safeCompare = (a, b) => {
   if (a.length !== b.length) {
     return false;
@@ -16,9 +14,16 @@ const validateSignature = (
   body,
   secret,
   signature,
-) => safeCompare(
-  createHmac('SHA256', secret).update(body).digest(),
-  s2b(signature, 'base64'),
-);
+) => {
+  if (typeof signature !== 'string' || !/^[A-Za-z0-9+/]{43}=$/.test(signature)) {
+    return false;
+  }
+  const decoded = Buffer.from(signature, 'base64');
+  if (decoded.toString('base64') !== signature) return false;
+  return safeCompare(
+    createHmac('SHA256', secret).update(body).digest(),
+    decoded,
+  );
+};
 
 export default validateSignature;
