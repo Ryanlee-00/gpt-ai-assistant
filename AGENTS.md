@@ -1,10 +1,14 @@
 <!-- BEGIN CODEX CLOUD BOOTSTRAP -->
 ## 共用指引載入（Cloud bootstrap）
 
-- 每次任務開始時，在專案根目錄、其父目錄與工作區（Cloud 通常為 `/workspace`）尋找 Git checkout；用 `git -C <候選路徑> remote -v` 確認 remote 對應 GitHub `Ryanlee-00/codex-shared-guidance`（接受 HTTPS／SSH 與可選的 `.git` 後綴），不得只憑目錄名稱判定。
-- 從確認的 checkout 讀取 `AGENTS.md` 與 `memory/index.md`，再依索引按需讀取詳細記憶；`codex-shared-guidance` 是共用指引唯一正式來源，不依賴暫存的 `$CODEX_HOME` 安裝副本。
+- 每次任務開始時，先讀取專案根目錄 `shared-guidance.lock.json`；只接受 `schema_version: 2`、repository `https://github.com/Ryanlee-00/codex-shared-guidance`、完整 `refs/tags/...` 的 `ref`，以及 40 字元小寫十六進位 `revision`。不接受 branch 作為 immutable 版本證明。
+- 在專案根目錄、其父目錄與工作區（Cloud 通常為 `/workspace`）尋找 Git checkout；用 `git -C <候選路徑> remote get-url origin` 確認 remote 對應 lock 的 repository（接受 HTTPS／SSH 與可選的 `.git` 後綴），不得只憑目錄名稱判定。
+- 驗證 candidate 前不得執行其中的 updater、installer 或其他程式。只用受信任的系統 Git plumbing 檢查：worktree policy 為 clean、`git rev-parse HEAD` 等於 lock revision，且 `git ls-remote origin <ref> <ref>^{}` 顯示該 tag（或 annotated tag 的 peeled 值）精確等於 revision。
+- 對 `AGENTS.md`、`memory/index.md` 與其後按需讀取的每個共用檔案，先用 `git ls-tree <revision> -- <path>` 確認它是 mode `100644` 或 `100755` 的 `blob`，再以 `git show <revision>:<path>` 從 commit blob 讀取；不得將 mutable worktree bytes 當成已驗證內容。
+- 缺失、lock 解析錯誤、失配、dirty、tag 未發布或未精確指向 revision、blob mode/path 異常、Git 檢查失敗或存在多個合格 checkout 時，fail closed 並明確回報「共用指引未載入」及原因；不得自行 fetch、切換或安裝。
+- 驗證成功後，依上述 blob-only 方式載入共用 `AGENTS.md`、`memory/index.md` 與必要詳細記憶；Cloud 不需安裝至 `$CODEX_HOME`。
 - 專案根目錄 `AGENTS.md` 是更具體且優先的補充；若有專案 `memory/index.md`，在共用索引之後讀取。
-- 找不到符合 remote 的 checkout、存在多個無法判定的 checkout，或必要檔案缺失／無法讀取時，明確回報「共用指引未載入」及原因；不得假裝已載入。找到並讀取成功後，回報實際來源路徑。
+- 必要檔案缺失／無法讀取時同樣 fail closed。找到並讀取成功後，回報實際來源路徑與已驗證 revision。
 <!-- END CODEX CLOUD BOOTSTRAP -->
 
 <!-- BEGIN CODEX PROJECT MEMORY GUIDANCE -->
