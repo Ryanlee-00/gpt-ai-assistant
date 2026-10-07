@@ -14,9 +14,10 @@
 <!-- BEGIN CODEX PROJECT MEMORY GUIDANCE -->
 ## 專案記憶
 
-- 任務開始時，在共用記憶索引之後讀取 `memory/index.md`；只有在相關時才開啟 `memory/decisions.md` 或 `memory/lessons.md`。
+- 任務開始時，在依 installed 或 Cloud direct-read 模式驗證並讀取共用記憶索引後，再讀取專案 `memory/index.md`；只有在相關時才開啟 `memory/decisions.md` 或 `memory/lessons.md`。Cloud direct-read 不以 `$CODEX_HOME` 存在全域副本為必要條件。
 - 將此儲存庫的指引與記憶視為共用基礎的專案層補充；更具體的專案規則優先。
-- 任務完成時，以日期、適用範圍、來源與驗證狀態記錄重要專案決策、已驗證解法及可重用經驗。
+- 只有本次任務的授權寫入集合明確包含相應 memory 路徑時才回寫：長期有效的專案決策寫入 `memory/decisions.md`；已驗證且可重用的解法或經驗寫入 `memory/lessons.md`；`memory/index.md` 也位於授權寫入集合時，才同步更新其導覽或檢視資訊。授權修改其他專案檔案不會擴張為 memory 寫入權；未涵蓋的 memory 路徑禁止修改，只在回報中提出候選項目。
+- 暫時進度、待辦與未解 issue 留在既有 task、issue tracker 或看板正本；不得建立重複的 `status.md`、`issues.md` 或其他記憶文件，也不得複製未經授權的外部或私人內容。
 - 新經驗預設保留在此專案；只有證據顯示可跨專案使用時，才標示為共用記憶候選。
 - 不要重複共用規則；引用共用項目，並只記錄本專案的例外或補充。
 <!-- END CODEX PROJECT MEMORY GUIDANCE -->

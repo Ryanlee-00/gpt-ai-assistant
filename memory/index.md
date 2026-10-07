@@ -3,14 +3,14 @@
 <!-- BEGIN CODEX PROJECT MEMORY INDEX FORMAT -->
 - Last reviewed: YYYY-MM-DD
 - Scope: this repository
-- Shared baseline: `$CODEX_HOME/shared-guidance/memory/index.md`
+- Shared baseline: use the source verified by the applicable `AGENTS.md`; installed mode reads `$CODEX_HOME/shared-guidance/memory/index.md`, while Cloud direct-read uses the revision pinned by `shared-guidance.lock.json`.
 
 ## Files
 
 - [`decisions.md`](decisions.md): durable project decisions and their rationale.
 - [`lessons.md`](lessons.md): verified project-specific solutions and reusable experience.
 
-Read only the detail files relevant to the current task. Project entries supplement the shared layer and should not duplicate it.
+Use this index only for navigation and review metadata. Keep temporary status, pending work, and unresolved issues in the existing task, issue tracker, or board of record; do not create duplicate `status.md`, `issues.md`, or other memory files. Read only the detail files relevant to the current task. Project entries supplement the shared layer and should not duplicate it.
 <!-- END CODEX PROJECT MEMORY INDEX FORMAT -->
 
 ## Project-specific topics
